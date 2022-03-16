@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="JR.P262605.HMI.UI.Operator.OperatorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JR.P262605.HMI.UI.Operator"
+             mc:Ignorable="d" 
+             d:DesignHeight="1024" d:DesignWidth="1080"
+             d:DataContext="{d:DesignInstance Type=local:OperatorViewModel}"
+             d:Background="White">
+
+    <UserControl.Resources>
+        <Style TargetType="Label" BasedOn="{StaticResource BaseLabel}"/>
+
+        <Style TargetType="TextBlock" x:Key="ButtonText">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="NavButton" BasedOn="{StaticResource BaseButtonStyle}">
+            <Style.Triggers>
+                <Trigger Property="AllowDrop" Value="True">
+                    <Setter Property="Background" Value="CornflowerBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Button Style="{StaticResource NavButton}" 
+                    Grid.Row="0"
+                    AllowDrop="{Binding PLCScreenActive}"
+                    Command="{Binding SelectScreenCommand}" CommandParameter="PLC">
+                <TextBlock Text="PLC IO" Style="{StaticResource ButtonText}" FontSize="28" />
+            </Button>
+
+            <Button Style="{StaticResource NavButton}" 
+                    Grid.Row="1"
+                    AllowDrop="{Binding RobotScreenActive}"
+                    Command="{Binding SelectScreenCommand}" CommandParameter="Robot">
+                <TextBlock Text="Robot" Style="{StaticResource ButtonText}" FontSize="28"/>
+            </Button>
+
+            <Button Style="{StaticResource NavButton}" 
+                    Grid.Row="2"
+                    AllowDrop="{Binding AlignerScreenActive}"
+                    Command="{Binding SelectScreenCommand}" CommandParameter="Aligner">
+                <TextBlock Text="Aligner" Style="{StaticResource ButtonText}" FontSize="28"/>
+            </Button>
+
+            <Button Style="{StaticResource NavButton}" 
+                    Grid.Row="3"
+                    AllowDrop="{Binding LaserScreenActive}"
+                    Command="{Binding SelectScreenCommand}" CommandParameter="Laser"
+                    Visibility="{Binding LaserScreenEnabled, Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="Laser" Style="{StaticResource ButtonText}" FontSize="28"/>
+            </Button>
+
+            <Button Style="{StaticResource NavButton}" 
+                    Grid.Row="3"
+                    AllowDrop="{Binding LumetricsScreenActive}"
+                    Command="{Binding SelectScreenCommand}" CommandParameter="Lumetrics"
+                    Visibility="{Binding LumetricsScreenEnabled, Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="Lumetrics" Style="{StaticResource ButtonText}" FontSize="28"/>
+            </Button>
+
+            <Button Style="{StaticResource NavButton}" 
+                    Grid.Row="4"
+                    AllowDrop="{Binding OCRScreenActive}"
+                    Command="{Binding SelectScreenCommand}" CommandParameter="OCR">
+                <TextBlock Text="OCR" Style="{StaticResource ButtonText}" FontSize="28"/>
+            </Button>
+
+            <Button Style="{StaticResource NavButton}" 
+                    Grid.Row="5"
+                    AllowDrop="{Binding SMIFRightScreenActive}"
+                    Command="{Binding SelectScreenCommand}" CommandParameter="SMIFRight">
+                <TextBlock Text="SMIF Right" Style="{StaticResource ButtonText}" FontSize="28"/>
+            </Button>
+
+            <Button Style="{StaticResource NavButton}" 
+                    Grid.Row="6"
+                    AllowDrop="{Binding SMIFLeftScreenActive}"
+                    Command="{Binding SelectScreenCommand}" CommandParameter="SMIFLeft">
+                <TextBlock Text="SMIF Left" Style="{StaticResource ButtonText}" FontSize="28"/>
+            </Button>
+        </Grid>
+
+        <UserControl Grid.Column="2" Content="{Binding ActiveScreen}"/>
+    </Grid>
+</UserControl>

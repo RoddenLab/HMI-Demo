@@ -1,0 +1,234 @@
+﻿<Window x:Class="JR.P262605.HMI.UI.Data.CassetteView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:JR.P262605.HMI.UI.Data"
+        mc:Ignorable="d" 
+        Height="800"
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Title="JR-Automation Cassette Data Editor"
+        Background="AliceBlue">
+
+    <Window.DataContext>
+        <local:CassetteViewModel/>
+    </Window.DataContext>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <TextBlock Text="RFID"/>
+                <TextBox Width="150" FontSize="16"
+                         Text="{Binding Model.RFID}" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="0" Grid.Column="2">
+                <TextBlock Text="Wafer Size"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" Width="150" Height="30" HorizontalAlignment="Left" 
+                          SelectedIndex="{Binding Model.WaferSize}">
+                    <ComboBoxItem Content="None"/>
+                    <ComboBoxItem Content="200mm"/>
+                    <ComboBoxItem Content="150mm"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Row="0" Grid.Column="4">
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="Notch Style"/>
+                <ComboBox Grid.Row="1" Grid.Column="4" Width="150" Height="30" HorizontalAlignment="Left" 
+                          SelectedIndex="{Binding Model.WaferNotch}">
+                    <ComboBoxItem Content="None"/>
+                    <ComboBoxItem Content="Notch"/>
+                    <ComboBoxItem Content="Flat"/>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource BaseLabel}" 
+                       FontSize="20" Content="Carrier ID"/>
+                <Label Grid.Row="0" Grid.Column="2" Style="{StaticResource BaseLabel}" 
+                       FontSize="20" Content="Scribe (Wafer) ID"/>
+                <Label Grid.Row="0" Grid.Column="3" Style="{StaticResource BaseLabel}" 
+                       FontSize="20" Content="Stack Thickness"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="1" />
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="2" />
+                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource BaseLabel}"  Content="3" />
+                <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="4" />
+                <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="5" />
+                <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="6" />
+                <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="7" />
+                <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="8" />
+                <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="9" />
+                <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="10" />
+                <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="11" />
+                <Label Grid.Row="12" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="12" />
+                <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="13" />
+                <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="14" />
+                <Label Grid.Row="15" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="15" />
+                <Label Grid.Row="16" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="16" />
+                <Label Grid.Row="17" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="17" />
+                <Label Grid.Row="18" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="18" />
+                <Label Grid.Row="19" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="19" />
+                <Label Grid.Row="20" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="20" />
+                <Label Grid.Row="21" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="21" />
+                <Label Grid.Row="22" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="22" />
+                <Label Grid.Row="23" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="23" />
+                <Label Grid.Row="24" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="24" />
+                <Label Grid.Row="25" Grid.Column="0" Style="{StaticResource BaseLabel}" Content="25" />
+
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Model.CarrierIDs[0]}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Model.CarrierIDs[1]}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Model.CarrierIDs[2]}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Model.CarrierIDs[3]}"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Model.CarrierIDs[4]}"/>
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Model.CarrierIDs[5]}"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Model.CarrierIDs[6]}"/>
+                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Model.CarrierIDs[7]}"/>
+                <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding Model.CarrierIDs[8]}"/>
+                <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding Model.CarrierIDs[9]}"/>
+                <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding Model.CarrierIDs[10]}"/>
+                <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding Model.CarrierIDs[11]}"/>
+                <TextBox Grid.Row="13" Grid.Column="1" Text="{Binding Model.CarrierIDs[12]}"/>
+                <TextBox Grid.Row="14" Grid.Column="1" Text="{Binding Model.CarrierIDs[13]}"/>
+                <TextBox Grid.Row="15" Grid.Column="1" Text="{Binding Model.CarrierIDs[14]}"/>
+                <TextBox Grid.Row="16" Grid.Column="1" Text="{Binding Model.CarrierIDs[15]}"/>
+                <TextBox Grid.Row="17" Grid.Column="1" Text="{Binding Model.CarrierIDs[16]}"/>
+                <TextBox Grid.Row="18" Grid.Column="1" Text="{Binding Model.CarrierIDs[17]}"/>
+                <TextBox Grid.Row="19" Grid.Column="1" Text="{Binding Model.CarrierIDs[18]}"/>
+                <TextBox Grid.Row="20" Grid.Column="1" Text="{Binding Model.CarrierIDs[19]}"/>
+                <TextBox Grid.Row="21" Grid.Column="1" Text="{Binding Model.CarrierIDs[20]}"/>
+                <TextBox Grid.Row="22" Grid.Column="1" Text="{Binding Model.CarrierIDs[21]}"/>
+                <TextBox Grid.Row="23" Grid.Column="1" Text="{Binding Model.CarrierIDs[22]}"/>
+                <TextBox Grid.Row="24" Grid.Column="1" Text="{Binding Model.CarrierIDs[23]}"/>
+                <TextBox Grid.Row="25" Grid.Column="1" Text="{Binding Model.CarrierIDs[24]}"/>
+
+                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Model.ScribeIDs[0]}"/>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Model.ScribeIDs[1]}"/>
+                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Model.ScribeIDs[2]}"/>
+                <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Model.ScribeIDs[3]}"/>
+                <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Model.ScribeIDs[4]}"/>
+                <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding Model.ScribeIDs[5]}"/>
+                <TextBox Grid.Row="7" Grid.Column="2" Text="{Binding Model.ScribeIDs[6]}"/>
+                <TextBox Grid.Row="8" Grid.Column="2" Text="{Binding Model.ScribeIDs[7]}"/>
+                <TextBox Grid.Row="9" Grid.Column="2" Text="{Binding Model.ScribeIDs[8]}"/>
+                <TextBox Grid.Row="10" Grid.Column="2" Text="{Binding Model.ScribeIDs[9]}"/>
+                <TextBox Grid.Row="11" Grid.Column="2" Text="{Binding Model.ScribeIDs[10]}"/>
+                <TextBox Grid.Row="12" Grid.Column="2" Text="{Binding Model.ScribeIDs[11]}"/>
+                <TextBox Grid.Row="13" Grid.Column="2" Text="{Binding Model.ScribeIDs[12]}"/>
+                <TextBox Grid.Row="14" Grid.Column="2" Text="{Binding Model.ScribeIDs[13]}"/>
+                <TextBox Grid.Row="15" Grid.Column="2" Text="{Binding Model.ScribeIDs[14]}"/>
+                <TextBox Grid.Row="16" Grid.Column="2" Text="{Binding Model.ScribeIDs[15]}"/>
+                <TextBox Grid.Row="17" Grid.Column="2" Text="{Binding Model.ScribeIDs[16]}"/>
+                <TextBox Grid.Row="18" Grid.Column="2" Text="{Binding Model.ScribeIDs[17]}"/>
+                <TextBox Grid.Row="19" Grid.Column="2" Text="{Binding Model.ScribeIDs[18]}"/>
+                <TextBox Grid.Row="20" Grid.Column="2" Text="{Binding Model.ScribeIDs[19]}"/>
+                <TextBox Grid.Row="21" Grid.Column="2" Text="{Binding Model.ScribeIDs[20]}"/>
+                <TextBox Grid.Row="22" Grid.Column="2" Text="{Binding Model.ScribeIDs[21]}"/>
+                <TextBox Grid.Row="23" Grid.Column="2" Text="{Binding Model.ScribeIDs[22]}"/>
+                <TextBox Grid.Row="24" Grid.Column="2" Text="{Binding Model.ScribeIDs[23]}"/>
+                <TextBox Grid.Row="25" Grid.Column="2" Text="{Binding Model.ScribeIDs[24]}"/>
+
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Model.Thicknesses[0]}"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Model.Thicknesses[1]}"/>
+                <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding Model.Thicknesses[2]}"/>
+                <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding Model.Thicknesses[3]}"/>
+                <TextBox Grid.Row="5" Grid.Column="3" Text="{Binding Model.Thicknesses[4]}"/>
+                <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding Model.Thicknesses[5]}"/>
+                <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding Model.Thicknesses[6]}"/>
+                <TextBox Grid.Row="8" Grid.Column="3" Text="{Binding Model.Thicknesses[7]}"/>
+                <TextBox Grid.Row="9" Grid.Column="3" Text="{Binding Model.Thicknesses[8]}"/>
+                <TextBox Grid.Row="10" Grid.Column="3" Text="{Binding Model.Thicknesses[9]}"/>
+                <TextBox Grid.Row="11" Grid.Column="3" Text="{Binding Model.Thicknesses[10]}"/>
+                <TextBox Grid.Row="12" Grid.Column="3" Text="{Binding Model.Thicknesses[11]}"/>
+                <TextBox Grid.Row="13" Grid.Column="3" Text="{Binding Model.Thicknesses[12]}"/>
+                <TextBox Grid.Row="14" Grid.Column="3" Text="{Binding Model.Thicknesses[13]}"/>
+                <TextBox Grid.Row="15" Grid.Column="3" Text="{Binding Model.Thicknesses[14]}"/>
+                <TextBox Grid.Row="16" Grid.Column="3" Text="{Binding Model.Thicknesses[15]}"/>
+                <TextBox Grid.Row="17" Grid.Column="3" Text="{Binding Model.Thicknesses[16]}"/>
+                <TextBox Grid.Row="18" Grid.Column="3" Text="{Binding Model.Thicknesses[17]}"/>
+                <TextBox Grid.Row="19" Grid.Column="3" Text="{Binding Model.Thicknesses[18]}"/>
+                <TextBox Grid.Row="20" Grid.Column="3" Text="{Binding Model.Thicknesses[19]}"/>
+                <TextBox Grid.Row="21" Grid.Column="3" Text="{Binding Model.Thicknesses[20]}"/>
+                <TextBox Grid.Row="22" Grid.Column="3" Text="{Binding Model.Thicknesses[21]}"/>
+                <TextBox Grid.Row="23" Grid.Column="3" Text="{Binding Model.Thicknesses[22]}"/>
+                <TextBox Grid.Row="24" Grid.Column="3" Text="{Binding Model.Thicknesses[23]}"/>
+                <TextBox Grid.Row="25" Grid.Column="3" Text="{Binding Model.Thicknesses[24]}"/>
+            </Grid>
+        </ScrollViewer>
+
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Content="Load" Width="75" Command="{Binding LoadDataCommand}"/>
+            <Button Grid.Column="3" Content="Save" Width="75" Command="{Binding SaveDataCommand}"/>
+        </Grid>
+    </Grid>
+</Window>

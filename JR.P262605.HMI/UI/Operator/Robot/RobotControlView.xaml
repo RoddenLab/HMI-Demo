@@ -1,0 +1,574 @@
+﻿<UserControl x:Class="JR.P262605.HMI.UI.Operator.Robot.RobotControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:JR.P262605.HMI.UI.Convert"
+             xmlns:local="clr-namespace:JR.P262605.HMI.UI.Operator.Robot"
+             mc:Ignorable="d"
+             d:DesignHeight="775"
+             d:DesignWidth="1080"
+             d:Background="White"
+             d:DataContext="{d:DesignInstance Type=local:RobotControlViewModel}">
+
+    <UserControl.Resources>
+        <c:WaferSizeToString x:Key="WaferSizeToString" />
+        <c:WaferNotchToString x:Key="WaferNotchToString" />
+        <c:RobotSpeedToString x:Key="RobotSpeedToString" />
+        <c:InverseBooleanConverter x:Key="InverseBoolean" />
+        <c:HMIStationToRobotStation x:Key="HMIStationToRobotStation"/>
+
+        <Style TargetType="TextBlock" x:Key="ButtonText">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Width" Value="Auto" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="AlertButton" BasedOn="{StaticResource BaseButtonStyle}">
+            <Style.Triggers>
+                <Trigger Property="AllowDrop" Value="True">
+                    <Setter Property="Background" Value="LightYellow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="ToggleButton" x:Key="ConfigButton" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Width" Value="Auto" />
+            <Style.Triggers>
+                <Trigger Property="AllowDrop" Value="True">
+                    <Setter Property="Background" Value="CornflowerBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Label" x:Key="BusyIndicator" BasedOn="{StaticResource BaseLabel}">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="DimGray"/>
+            <Style.Triggers>
+                <Trigger Property="AllowDrop" Value="True">
+                    <Setter Property="Background" Value="Yellow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="225" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Grid.Column="0">
+            <GroupBox.Header>
+                <TextBlock Text="Robot Status" FontSize="18" />
+            </GroupBox.Header>
+
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource LineItem}" Text="Unable to Move" />
+                <Rectangle Grid.Row="0" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.UnableToMove}" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource LineItem}" Text="Command Error" />
+                <Rectangle Grid.Row="1" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.CommandError}" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource LineItem}" Text="Vacuum Sensor" />
+                <Rectangle Grid.Row="2" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.VacuumSensor}" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource LineItem}" Text="Vacuum Switch" />
+                <Rectangle Grid.Row="3" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.VacuumSwitch}" />
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource LineItem}" Text="Motion Error" />
+                <Rectangle Grid.Row="4" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.MotionError}" />
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource LineItem}" Text="Software Limit" />
+                <Rectangle Grid.Row="5" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.SoftwareLimit}" />
+
+                <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource LineItem}" Text="Not Homed" />
+                <Rectangle Grid.Row="6" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.NotHomed}" />
+
+                <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource LineItem}" Text="Macro Running" />
+                <Rectangle Grid.Row="7" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.MacroRunning}" />
+
+                <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource LineItem}" Text="In Motion" />
+                <Rectangle Grid.Row="8" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.InMotion}" />
+
+                <TextBlock Grid.Row="9" Grid.Column="0" Style="{StaticResource LineItem}" Text="Servo Off" />
+                <Rectangle Grid.Row="9" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.ServoOff}" />
+
+                <TextBlock Grid.Row="10" Grid.Column="0" Style="{StaticResource LineItem}" Text="In Teach Mode" />
+                <Rectangle Grid.Row="10" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.InTeachMode}" />
+
+                <TextBlock Grid.Row="11" Grid.Column="0" Style="{StaticResource LineItem}" Text="In Search Mode" />
+                <Rectangle Grid.Row="11" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.InSearchMode}" />
+
+                <TextBlock Grid.Row="12" Grid.Column="0" Style="{StaticResource LineItem}" Text="File Error" />
+                <Rectangle Grid.Row="12" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.FileError}" />
+
+                <TextBlock Grid.Row="13" Grid.Column="0" Style="{StaticResource LineItem}" Text="In Teach Scan Mode" />
+                <Rectangle Grid.Row="13" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.InTeachScanMode}" />
+
+                <Label Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BusyIndicator}"
+                       AllowDrop="{Binding Model.hoRobotBusy}">
+                    <TextBlock Text="Robot Busy"/>
+                </Label>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="0">
+            <GroupBox.Header>
+                <TextBlock Text="Robot Interface" FontSize="18" />
+            </GroupBox.Header>
+
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource LineItem}" Text="API Heartbeat" />
+                <TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True"
+                         Text="{Binding Model.APIOut.HeartbeatEcho}" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource LineItem}" Text="Robot Connected" />
+                <Rectangle Grid.Row="1" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.Connected}" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource LineItem}" Text="Start Ack OK" />
+                <Rectangle Grid.Row="2" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.StartAckOK}" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource LineItem}" Text="Start Ack NOK" />
+                <Rectangle Grid.Row="3" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.StartAckNOK}" />
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource LineItem}" Text="Done" />
+                <Rectangle Grid.Row="4" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.Done}" />
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource LineItem}" Text="Error" />
+                <TextBox Grid.Row="5" Grid.Column="2" IsReadOnly="True"
+                         Text="{Binding Model.APIOut.Error}" />
+
+                <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Width="Auto"
+                            Command="{Binding ResetAPICommand}">
+                    <TextBlock Text="Reset API" Style="{StaticResource ButtonText}" />
+                </Button>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3">
+            <GroupBox.Header>
+                <TextBlock Text="Manual Controls" FontSize="18" />
+            </GroupBox.Header>
+
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0"
+                        IsEnabled="{Binding Model.hoManualMode}"
+                        Command="{Binding StatusCommand}">
+                    <TextBlock Text="Status" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="0" Grid.Column="2"
+                        IsEnabled="{Binding Model.hoManualMode}"
+                        Command="{Binding ServoOnCommand}">
+                    <TextBlock Text="Servo On" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="0" Grid.Column="4"
+                        IsEnabled="{Binding Model.hoManualMode}"
+                        Command="{Binding ServoOffCommand}">
+                    <TextBlock Text="Servo Off" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="2" Grid.Column="0"
+                        IsEnabled="{Binding Model.hoManualMode}"
+                        Command="{Binding SetSpeedCommand}">
+                    <TextBlock Text="Speed" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="2" Grid.Column="2"
+                        IsEnabled="{Binding Model.hoManualMode}"
+                        Command="{Binding VacuumOnCommand}">
+                    <TextBlock Text="Vacuum On" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="2" Grid.Column="4"
+                        IsEnabled="{Binding Model.hoManualMode}"
+                        Command="{Binding VacuumOffCommand}">
+                    <TextBlock Text="Vacuum Off" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">
+                    <TextBlock Text="Selected Station" Style="{StaticResource ButtonText}" TextAlignment="Center" />
+                    <ComboBox Height="30" SelectedIndex="{Binding Model.hiSelectedStation, Converter={StaticResource HMIStationToRobotStation}}">
+                        <ComboBoxItem Content="None" />
+                        <ComboBoxItem Content="Laser" TabIndex="1"/>
+                        <ComboBoxItem Content="Aligner" TabIndex="3"/>
+                        <ComboBoxItem Content="Bottom OCR (200)"/>
+                        <ComboBoxItem Content="Bottom OCR (150)"/>
+                        <ComboBoxItem Content="Top OCR (200)"/>
+                        <ComboBoxItem Content="Top OCR (150)"/>
+                        <ComboBoxItem Content="Nest A (200)"/>
+                        <ComboBoxItem Content="Nest A (150)"/>
+                        <ComboBoxItem Content="Nest B (200)"/>
+                        <ComboBoxItem Content="Nest B (150)"/>
+                    </ComboBox>
+                </StackPanel>
+
+
+                <StackPanel Grid.Row="8" Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="Selected Axis" Style="{StaticResource ButtonText}" TextAlignment="Center" />
+                    <ComboBox Height="30" SelectedIndex="{Binding Model.hiMoveRelativeAxis}">
+                        <ComboBoxItem Content="None"/>
+                        <ComboBoxItem Content="Theta [0.01°]"/>
+                        <ComboBoxItem Content="Radial [um]"/>
+                        <ComboBoxItem Content="Height [um]"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Grid.Row="8" Grid.Column="2" VerticalAlignment="Center">
+                    <TextBlock Text="Move Amount" Style="{StaticResource ButtonText}" TextAlignment="Center" />
+                    <TextBox Height="30" Text="{Binding Model.hiMoveRelativeAmount}" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+
+                <Button Grid.Row="8" Grid.Column="4" Command="{Binding MoveRelativeCommand}"
+                        IsEnabled="{Binding Model.hoMovementReady}">
+                    <TextBlock Text="Move Relative" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+
+
+                <StackPanel Grid.Row="10" Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="Selected Axis" Style="{StaticResource ButtonText}" TextAlignment="Center" />
+                    <ComboBox Height="30" SelectedIndex="{Binding Model.hiMoveAbsoluteAxis}">
+                        <ComboBoxItem Content="None"/>
+                        <ComboBoxItem Content="Theta [0.01°]"/>
+                        <ComboBoxItem Content="Radial [um]"/>
+                        <ComboBoxItem Content="Height [um]"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Grid.Row="10" Grid.Column="2" VerticalAlignment="Center">
+                    <TextBlock Text="Position" Style="{StaticResource ButtonText}" TextAlignment="Center" />
+                    <TextBox Height="30" Text="{Binding Model.hiMoveAbsoluteAmount}" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+
+                <Button Grid.Row="10" Grid.Column="4" Command="{Binding MoveAbsoluteCommand}"
+                        IsEnabled="{Binding Model.hoMovementReady}">
+                    <TextBlock Text="Move Absolute" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+                <StackPanel Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center">
+                    <TextBlock Text="Current Position" Style="{StaticResource ButtonText}" TextAlignment="Center" />
+                    <TextBox Height="30" Text="{Binding Model.hoCurrentPosition}" IsReadOnly="True" VerticalContentAlignment="Center" TextAlignment="Center"/>
+                </StackPanel>
+
+                <Button Grid.Row="12" Grid.Column="4" Command="{Binding FetchPositionCommand}"
+                        IsEnabled="{Binding Model.hoMovementReady}">
+                    <TextBlock Text="Fetch Position" Style="{StaticResource ButtonText}"/>
+                </Button>
+                
+                <Button Grid.Row="4" Grid.Column="6"
+                        IsEnabled="{Binding Model.AlignerHasWafer}"
+                        Command="{Binding AlignWaferCommand}">
+                    <TextBlock Text="Align Wafer" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="4" Grid.Column="8"
+                        IsEnabled="{Binding Model.hoMovementReady}"
+                        Command="{Binding PickFromAlignerCommand}">
+                    <TextBlock Text="Pick from Aligner" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="4" Grid.Column="10"
+                        IsEnabled="{Binding Model.hoMovementReady}"
+                        Command="{Binding PlaceToAlignerCommand}">
+                    <TextBlock Text="Place to Aligner" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="0" Grid.Column="8"
+                        IsEnabled="{Binding Model.hoMovementReady}"
+                        Command="{Binding PickFromCassetteACommand}">
+                    <TextBlock Text="Pick from Cassette A" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="0" Grid.Column="10"
+                        IsEnabled="{Binding Model.hoMovementReady}"
+                        Command="{Binding PlaceToCassetteACommand}">
+                    <TextBlock Text="Place to Cassette A" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="2" Grid.Column="8"
+                        IsEnabled="{Binding Model.hoMovementReady}"
+                        Command="{Binding PickFromCassetteBCommand}">
+                    <TextBlock Text="Pick from Cassette B" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="2" Grid.Column="10"
+                        IsEnabled="{Binding Model.hoMovementReady}"
+                        Command="{Binding PlaceToCassetteBCommand}">
+                    <TextBlock Text="Place to Cassette B" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <StackPanel Grid.Row="0" Grid.Column="6" Grid.RowSpan="3" VerticalAlignment="Center">
+                    <TextBlock Text="Selected Slot" Style="{StaticResource ButtonText}" TextAlignment="Center"/>
+                    <TextBox Height="30" Text="{Binding Model.hiCassetteSlot}" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+
+                <Button Grid.Row="8" Grid.Column="8"   
+                        IsEnabled="{Binding Model.hoMovementReady}"
+                        Command="{Binding ScanCassetteACommand}">
+                    <TextBlock Text="Scan Cassette A" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="8" Grid.Column="10"
+                        IsEnabled="{Binding Model.hoMovementReady}"
+                        Command="{Binding ScanCassetteBCommand}">
+                    <TextBlock Text="Scan Cassette B" Style="{StaticResource ButtonText}" />
+                </Button>
+                
+
+                <Button Grid.Row="4" Grid.Column="2"
+                        IsEnabled="{Binding Model.hoHomeReady}"
+                        Command="{Binding HomeRobotCommand}">
+                    <TextBlock Text="Home" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="12" Grid.Column="10" Command="{Binding StopCommand}"
+                        Background="Red" Foreground="White" FontWeight="Bold">
+                    <TextBlock Text="STOP" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <Button Grid.Row="6" Grid.Column="4" Command="{Binding MoveToStationCommand}"
+                        IsEnabled="{Binding Model.hoMovementReady}">
+                    <TextBlock Text="Move to Station" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+                <Button Grid.Row="4" Grid.Column="0" Command="{Binding MoveToHomeCommand}"
+                        IsEnabled="{Binding Model.hoMovementReady}">
+                    <TextBlock Text="Move to Home" Style="{StaticResource ButtonText}"/>
+                </Button>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="2">
+            <GroupBox.Header>
+                <TextBlock Text="Equipment Settings" FontSize="18" />
+            </GroupBox.Header>
+
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
+                    <Label />
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left" Text="Robot Speed:" Style="{StaticResource ButtonText}"/>
+                        <TextBlock DockPanel.Dock="Right" Style="{StaticResource ButtonText}"
+                                   Text="{Binding Model.hoRobotSpeed, Converter={StaticResource RobotSpeedToString}}" />
+                    </DockPanel>
+                    <ComboBox Height="30" SelectedIndex="{Binding Model.hiSpeedSetting}">
+                        <ComboBoxItem Content="Very Slow" />
+                        <ComboBoxItem Content="Slow" />
+                        <ComboBoxItem Content="Moderate" />
+                        <ComboBoxItem Content="Fast" />
+                        <ComboBoxItem Content="Very Fast" />
+                    </ComboBox>
+                </StackPanel>
+
+                <Button Grid.Row="0" Grid.Column="4" Command="{Binding UpdateSpeedCommand}">
+                    <TextBlock Text="Set Speed" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
+                    <Label />
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left" Text="Z-Step Ratio:" Style="{StaticResource ButtonText}"/>
+                        <TextBlock DockPanel.Dock="Right" Style="{StaticResource ButtonText}"
+                                   Text="{Binding Model.hoZStepRatio}"/>
+                    </DockPanel>
+                    <TextBox Text="{Binding Model.hiZStepRatio}" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                </StackPanel>
+                <Button Grid.Row="2" Grid.Column="4" Command="{Binding SetZStepRatio}">
+                    <TextBlock Text="Set Value" Style="{StaticResource ButtonText}" />
+                </Button>
+
+                <StackPanel Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
+                    <Label />
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left" Text="Ref Wafer (um):" Style="{StaticResource ButtonText}"/>
+                        <TextBlock DockPanel.Dock="Right" Style="{StaticResource ButtonText}"
+                                   Text="{Binding Model.hoRefWaferThickness}"/>
+                    </DockPanel>
+                    <TextBox Text="{Binding Model.hiReferenceWafer}" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                </StackPanel>
+                <Button Grid.Row="4" Grid.Column="4" Command="{Binding SetReferenceWaferCommand}">
+                    <TextBlock Text="Set Value" Style="{StaticResource ButtonText}" />
+                </Button>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="4">
+            <GroupBox.Header>
+                <TextBlock Text="Current Wafer" FontSize="18" />
+            </GroupBox.Header>
+
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.hoWaferCarrierID}" />
+                    <TextBlock DockPanel.Dock="Bottom" Text="Carrier ID" Style="{StaticResource ButtonText}"/>
+                </DockPanel>
+
+                <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.hoWaferThickness}" />
+                    <TextBlock DockPanel.Dock="Bottom" Text="Thickness" Style="{StaticResource ButtonText}"/>
+                </DockPanel>
+
+                <DockPanel Grid.Row="1" Grid.Column="4" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.hoWaferSize, Converter={StaticResource WaferSizeToString}}" />
+                    <TextBlock DockPanel.Dock="Bottom" Text="Size" Style="{StaticResource ButtonText}"/>
+                </DockPanel>
+
+                <DockPanel Grid.Row="3" Grid.Column="0" LastChildFill="False" VerticalAlignment="Center">
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource ButtonText}"
+                           Text="Wafer Present"/>
+                    <Rectangle DockPanel.Dock="Top" 
+                           Style="{StaticResource OnLight}"
+                           AllowDrop="{Binding Model.hoWaferPresent}"/>
+                </DockPanel>
+
+                <Button Grid.Row="3" Grid.Column="4"
+                        Command="{Binding RemoveWaferCommand}"
+                        IsEnabled="{Binding Model.hoWaferPresent}">
+                    <TextBlock Text="Remove Wafer" Style="{StaticResource ButtonText}" />
+                </Button>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

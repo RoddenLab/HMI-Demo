@@ -1,0 +1,43 @@
+{
+  "AlignerConfiguration": {
+    "Name": "Aligner",
+    "Enabled": true,
+    "TCPEndpoint": "192.168.0.155:23",
+    "ADSEndpoint": "192.168.0.111.1.1:851"
+  },
+  "GEMConfiguration": {
+    "Name": "GEM",
+    "Enabled": true,
+    "ADSEndpoint": "192.168.0.111.1.1:851"
+  },
+  "LaserConfiguration": {
+    "Name": "Laser",
+    "Enabled": true,
+    "TCPEndpoint": "192.168.0.51:9000",
+    "ADSEndpoint": "192.168.0.111.1.1:851"
+  },
+  "LumetricsConfiguration": {
+    "Name": "Lumetrics",
+    "Enabled": false,
+    "TCPEndpoint": "192.168.0.51",
+    "ADSEndpoint": "192.168.0.111.1.1:851"
+  },
+  "RobotConfiguration": {
+    "Name": "Robot",
+    "Enabled": true,
+    "TCPEndpoint": "192.168.0.151:23",
+    "ADSEndpoint": "192.168.0.111.1.1:851"
+  },
+  "TopVisionConfiguration": {
+    "Name": "Top Vision",
+    "Enabled": true,
+    "TCPEndpoint": "192.168.0.65:2003",
+    "ADSEndpoint": "192.168.0.111.1.1:851"
+  },
+  "BottomVisionConfiguration": {
+    "Name": "Bottom Vision",
+    "Enabled": true,
+    "TCPEndpoint": "192.168.0.66:2003",
+    "ADSEndpoint": "192.168.0.111.1.1:851"
+  }
+}

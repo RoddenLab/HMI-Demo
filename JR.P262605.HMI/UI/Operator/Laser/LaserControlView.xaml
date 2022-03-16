@@ -1,0 +1,456 @@
+﻿<UserControl x:Class="JR.P262605.HMI.UI.Operator.Laser.LaserControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JR.P262605.HMI.UI.Operator.Laser"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" 
+             d:DesignWidth="1080"
+             d:DataContext="{d:DesignInstance Type=local:LaserControlViewModel}"
+             d:Background="White">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="ButtonText">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="Width" Value="Auto"/>
+        </Style>
+
+        <Style TargetType="ToggleButton" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="Width" Value="Auto"/>
+        </Style>
+
+        <Style TargetType="ToggleButton" x:Key="ConfigButton" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Width" Value="Auto" />
+            <Style.Triggers>
+                <Trigger Property="AllowDrop" Value="True">
+                    <Setter Property="Background" Value="CornflowerBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Label" x:Key="BusyIndicator" BasedOn="{StaticResource BaseLabel}">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="DimGray"/>
+            <Style.Triggers>
+                <Trigger Property="AllowDrop" Value="True">
+                    <Setter Property="Background" Value="Yellow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="InfoName">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="225"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <GroupBox Grid.Row="0" Grid.Column="0">
+            <GroupBox.Header>
+                <TextBlock Text="Laser Status" FontSize="18"/>
+            </GroupBox.Header>
+
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Module Ready"/>
+                <Rectangle Grid.Row="0" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.ModuleReadyToProcess}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="PLC Ready"/>
+                <Rectangle Grid.Row="1" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.PLCInitalized}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Scanner Ready"/>
+                <Rectangle Grid.Row="2" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.ScannerInitialized}"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Weldmark Ready"/>
+                <Rectangle Grid.Row="3" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.WeldmarkInitialized}"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Laser Ready"/>
+                <Rectangle Grid.Row="4" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.LaserInitialized}"/>
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Axis Control Ready"/>
+                <Rectangle Grid.Row="5" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.AxisControlInitialized}"/>
+
+                <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Power Attenuator Ready"/>
+                <Rectangle Grid.Row="6" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.PowerAttenuatorInitialized}"/>
+
+                <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Beam Expander Ready"/>
+                <Rectangle Grid.Row="7" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.BeamExpanderInitialized}"/>
+
+                <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Inline Meter Ready"/>
+                <Rectangle Grid.Row="8" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.InlinePowerMeterInitialized}"/>
+
+                <TextBlock Grid.Row="9" Grid.Column="0" Style="{StaticResource LineItem}" 
+                           Text="Process Meter Ready"/>
+                <Rectangle Grid.Row="9" Grid.Column="2" Style="{StaticResource OnLight}" 
+                           DataContext="{Binding Model.APIOut.ProcessPowerMeterInitialized}"/>
+
+                <Label Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BusyIndicator}"
+                       AllowDrop="{Binding Model.hoLaserBusy}">
+                    <TextBlock Text="Laser Busy"/>
+                </Label>
+            </Grid>
+            
+        </GroupBox>
+        
+        <GroupBox Grid.Row="2" Grid.Column="0">
+            <GroupBox.Header>
+                <TextBlock Text="Laser Interface" FontSize="18"/>
+            </GroupBox.Header>
+
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource LineItem}" Text="API Heartbeat"/>
+                <TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True" 
+                         Text="{Binding Model.APIOut.HeartbeatEcho}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource LineItem}" Text="Laser Connected"/>
+                <Rectangle Grid.Row="1" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.Connected}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource LineItem}" Text="Measure Ack"/>
+                <Rectangle Grid.Row="2" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.MeasureAck}"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource LineItem}" Text="Measure Done"/>
+                <Rectangle Grid.Row="3" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.MeasureDone}"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource LineItem}" Text="Measure Error"/>
+                <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True"
+                         Text="{Binding Model.APIOut.MeasureError}"/>
+
+                <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource LineItem}" Text="Mark ID Set Done"/>
+                <Rectangle Grid.Row="6" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.MarkIDSetDone}"/>
+
+                <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource LineItem}" Text="Recipe Set Done"/>
+                <Rectangle Grid.Row="7" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.RecipeSetDone}"/>
+
+                <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource LineItem}" Text="Process Start Ack"/>
+                <Rectangle Grid.Row="8" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.ProcessStartAck}"/>
+
+                <TextBlock Grid.Row="9" Grid.Column="0" Style="{StaticResource LineItem}" Text="Process Abort Done"/>
+                <Rectangle Grid.Row="9" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.ProcessAbortDone}"/>
+
+                <TextBlock Grid.Row="10" Grid.Column="0" Style="{StaticResource LineItem}" Text="Process Done"/>
+                <Rectangle Grid.Row="10" Grid.Column="2" Style="{StaticResource OnLight}"
+                           DataContext="{Binding Model.APIOut.ProcessDone}"/>
+                
+                <TextBlock Grid.Row="11" Grid.Column="0" Style="{StaticResource LineItem}" Text="Process Error"/>
+                <TextBox Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True"
+                         Text="{Binding Model.APIOut.ProcessError}"/>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3">
+            <GroupBox.Header>
+                <TextBlock Text="Manual Controls" FontSize="18"/>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <Slider Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Minimum="0" Maximum="100" TickFrequency="5" 
+                        IsSnapToTickEnabled="True" TickPlacement="Both" Interval="1" VerticalAlignment="Bottom"
+                        Value="{Binding Model.hiMeasurePEC}"/>
+                <DockPanel Grid.Row="0" Grid.Column="4" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center"
+                             Text="{Binding Model.hiMeasurePEC}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Measure PEC" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+
+
+                <Slider Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Minimum="45000" Maximum="75000" TickFrequency="2500" 
+                        IsSnapToTickEnabled="True" TickPlacement="Both" Interval="1" VerticalAlignment="Bottom"
+                        Value="{Binding Model.hiMeasurePRF}"/>
+                <DockPanel Grid.Row="2" Grid.Column="4" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center"
+                             Text="{Binding Model.hiMeasurePRF}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Measure PRF" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+
+
+                <Slider Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Minimum="0" Maximum="100" TickFrequency="5" 
+                        IsSnapToTickEnabled="True" TickPlacement="Both" Interval="1" VerticalAlignment="Bottom"
+                        Value="{Binding Model.hiMeasureATT}"/>
+                <DockPanel Grid.Row="4" Grid.Column="4" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center"
+                             Text="{Binding Model.hiMeasureATT}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Measure Attenuator" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+
+                <DockPanel Grid.Row="6" Grid.Column="0" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center" TextAlignment="Center" FontSize="16" FontWeight="Bold" IsReadOnly="True"
+                             Text="{Binding Model.hoMeasurePower}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Last Measurement" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+                <Button Grid.Row="6" Grid.Column="4" Command="{Binding MeasurePowerCommand}"
+                        IsEnabled="{Binding Model.hoLaserFireReady}">
+                    <TextBlock Text="Measure Power" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+                <DockPanel Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.hiSelectedRecipe}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Selected Recipe" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+                <Button Grid.Row="0" Grid.Column="10" Command="{Binding SelectRecipeCommand}"
+                        IsEnabled="{Binding Model.hoManualMode}">
+                    <TextBlock Text="Select Recipe" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+                <DockPanel Grid.Row="2" Grid.Column="6" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center"
+                             Text="{Binding Model.hiMarkID}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Selected Scribe ID" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+                <Button Grid.Row="2" Grid.Column="10" Command="{Binding SetMarkIDCommand}"
+                        IsEnabled="{Binding Model.hoManualMode}">
+                    <TextBlock Text="Set Scribe ID" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+                <DockPanel Grid.Row="4" Grid.Column="6" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.hoWaferMarkID}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Wafer Scribe ID" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+
+                <Button Grid.Row="4" Grid.Column="10" Command="{Binding SetWaferMarkIDCommand}"
+                        IsEnabled="{Binding Model.hoManualMode}">
+                    <TextBlock Text="Use Wafer Scribe ID" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+                <DockPanel Grid.Row="6" Grid.Column="6" Grid.ColumnSpan="3" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.hoWaferRecipe}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Wafer Recipe" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+                <Button Grid.Row="6" Grid.Column="10" Command="{Binding SetWaferRecipeCommand}"
+                        IsEnabled="{Binding Model.hoManualMode}">
+                    <TextBlock Text="Use Wafer Recipe" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+                <Button Grid.Row="10" Grid.Column="10" 
+                        Command="{Binding AbortCommand}" 
+                        Background="Red" Foreground="White" FontWeight="Bold">
+                    <TextBlock Text="ABORT" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+                <Button Grid.Row="8" Grid.Column="10"
+                        IsEnabled="{Binding Model.hoLaserFireReady}"
+                        Command="{Binding StartRecipeCommand}">
+                    <TextBlock Text="Start Process" Style="{StaticResource ButtonText}"/>
+                </Button>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="2">
+            <GroupBox.Header>
+                <TextBlock Text="Equipment Settings" FontSize="18"/>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="4">
+            <GroupBox.Header>
+                <TextBlock Text="Laser Feedback" FontSize="18"/>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+
+
+                <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" LastChildFill="False">
+                    <TextBox DockPanel.Dock="Bottom" Height="30" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.APIOut.SelectedRecipe}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Current Weldmark Job" Style="{StaticResource InfoName}"/>
+                </DockPanel>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource InfoName}"
+                               Text="Current Scribe ID" />
+                <TextBox Grid.Row="2" Grid.Column="2" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.hoMarkID}"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource InfoName}"
+                               Text="Beam Expander Mag" />
+                <TextBox Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.APIOut.BeamExpanderMag}"/>
+
+                <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource InfoName}"
+                               Text="Attenuator Setting" />
+                <TextBox Grid.Row="6" Grid.Column="2" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.APIOut.AttenuatorPower}"/>
+
+                <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource InfoName}"
+                               Text="Laser PEC" />
+                <TextBox Grid.Row="8" Grid.Column="2" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.APIOut.LaserPEC}"/>
+
+                <TextBlock Grid.Row="10" Grid.Column="0" Style="{StaticResource InfoName}"
+                               Text="Laser Workpiece [W]" />
+                <TextBox Grid.Row="10" Grid.Column="2" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.APIOut.LaserWorkpiecePower}"/>
+
+                <TextBlock Grid.Row="12" Grid.Column="0" Style="{StaticResource InfoName}"
+                               Text="Laser Inline [W]" />
+                <TextBox Grid.Row="12" Grid.Column="2" VerticalContentAlignment="Center" IsReadOnly="True"
+                             Text="{Binding Model.APIOut.LaserInlinePower}"/>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

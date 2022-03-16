@@ -1,0 +1,7 @@
+{
+  "ButtonDelay": 250,
+  "OPCEndPoint": "opc.tcp://localhost:4840",
+  "LaserEnabled": true,
+  "LumetricsEnabled": false,
+  "TopOCREnabled": true
+}

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "JR.P262605.HMI": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false,
+      "authenticationMode": "Windows",
+      "remoteDebugMachine": "CX-5BB9B2:4026"
+    }
+  }
+}
